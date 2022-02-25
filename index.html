@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Authors</title>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+    // https://www.geeksforgeeks.org/how-to-submit-a-form-using-ajax-in-jquery/
+    $(document).ready(function(){
+        $("form").on("submit", function(event){
+            event.preventDefault(); // use AJAX
+     
+            var formValues= $(this).serialize();
+    
+            $.ajax({
+                    method: "GET",
+                    url: '/authors', // buggy
+                    data: formValues ,
+                    cache: false,
+                    success: function(data) {
+                          
+                        // Ajax call completed successfully
+                        
+                       // $('#showid').val();
+                       $('#result').html(data);
+                       // alert(data);
+                    },
+                    error: function(data) {
+                          
+                        // Some error in ajax call
+                        alert(data);
+                    }
+                });
+        });
+    });
+</script>
+<script>
+    function CreateTable(data){
+        var col = [];
+        for (var i = 0; i < data.length; i++)
+        {
+            for (var key in data[i])
+            {
+                if (col.indexOf(key === -1))
+                {
+                    col.push(key);
+                }
+            }
+        }
+
+    }
+    var table = document.createElement("table");
+    
+    var tr = table.insertRow(-1);                   // TABLE ROW.
+
+        for (var i = 0; i < col.length; i++) {
+            var th = document.createElement("th");      // TABLE HEADER.
+            th.innerHTML = col[i];
+            tr.appendChild(th);
+        }
+        for (var i = 0; i < data.length; i++) {
+
+        tr = table.insertRow(-1);
+
+        for (var j = 0; j < col.length; j++) {
+            var tabCell = tr.insertCell(-1);
+            tabCell.innerHTML = data[i][col[j]];
+        }
+}    
+var divContainer = document.getElementById("showData");
+        divContainer.innerHTML = "";
+        divContainer.appendChild(table);
+    
+</script>
+
+<script>
+
+    var el_up = document.getElementById("GFG_UP");
+
+    // test list 
+    
+    var list = [
+        { "col_1": "val_11", "col_3": "val_13" },
+        { "col_2": "val_22", "col_3": "val_23" },
+        { "col_1": "val_31", "col_3": "val_33" }
+    ];
+     
+    el_up.innerHTML = "Click on the button to create "
+            +   "the table from the JSON data.<br><br>"
+            + JSON.stringify(list[0]) + "<br>"
+            + JSON.stringify(list[1]) + "<br>"
+            + JSON.stringify(list[2]);  
+         
+    function constructTable(selector) {
+         
+        // Getting the all column names
+        var cols = Headers(list, selector); 
+
+        // Traversing the JSON data
+        for (var i = 0; i < list.length; i++) {
+            var row = $('<tr/>');  
+            for (var colIndex = 0; colIndex < cols.length; colIndex++)
+            {
+                var val = list[i][cols[colIndex]];
+                 
+                // If there is any key, which is matching
+                // with the column name
+                if (val == null) val = ""; 
+                    row.append($('<td/>').html(val));
+            }
+             
+            // Adding each row to the table
+            $(selector).append(row);
+        }
+    }
+     
+    function Headers(list, selector) {
+        var columns = [];
+        var header = $('<tr/>');
+         
+        for (var i = 0; i < list.length; i++) {
+            var row = list[i];
+             
+            for (var k in row) {
+                if ($.inArray(k, columns) == -1) {
+                    columns.push(k);
+                     
+                    // Creating the header
+                    header.append($('<th/>').html(k));
+                }
+            }
+        }
+         
+        // Appending the header to the table
+        $(selector).append(header);
+            return columns;
+    }      
+</script>
+
+
+
+    
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+   <header class="font-weight-bold"><font size="+4"><center>Authors</center></font size></header>
+   <br>
+   
+        <table class="table table-dark">
+            <thead>
+            <tr>
+                <th scope="col">Author ID</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">---</th>
+            </tr>
+            </thead>
+            <tr>
+                <td>test</td>
+                <td>test2</td>
+                <td>test3</td>
+            <td> <button type="button" class="btn btn-primary">Edit</button></td>
+        </tr>
+        </table>
+    
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+   
+</body>
+</html>

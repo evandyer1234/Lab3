@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Add Author</title>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+// https://www.geeksforgeeks.org/how-to-submit-a-form-using-ajax-in-jquery/
+$(document).ready(function(){
+    $("form").on("submit", function(event){
+        event.preventDefault(); // use AJAX
+ 
+        var formValues= $(this).serialize();
+
+        $.ajax({
+                method: "POST",
+                url: '/authorg', // buggy
+                data: formValues ,
+                cache: false,
+                success: function(data) {
+                      
+                    // Ajax call completed successfully
+
+                    $('#result').html(data);
+
+                   // alert(data);
+                },
+                error: function(data) {
+                      
+                    // Some error in ajax call
+                    alert(data);
+                }
+            });
+    });
+});
+</script>
+
+</head>
+<body>
+    <form>
+        <p align="right">
+            <label>ID:</label>
+            <input type="text" name="id">
+        </p>
+        <p align="right">
+            <label>First Name:</label>
+            <input type="text" name="id">
+        </p>
+        <p align="right">
+            <label>Last Name:</label>
+            <input type="text" name="id">
+        </p>
+        <p align="right">
+        <input type="submit" value="submit">
+        </p>
+    </form>
+    <div align="right" id="result"></div>
+</body>
+</html>
